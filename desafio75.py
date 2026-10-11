@@ -5,11 +5,10 @@ def conectar_api():
         try:
             print("Tentando conectar à API...")
 
-            conexao = True
+            raise ConnectionError("API indisponível")
 
-            if conexao:
-                print("Conexão realizada com sucesso!")
-                break
+            print("Conexão realizada com sucesso!")
+            break
 
         except ConnectionError:
             tentativas += 1
