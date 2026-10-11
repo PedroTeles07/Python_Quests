@@ -1,6 +1,6 @@
 def cadastrar_produto(nome, preco, quantidade):
 
-    if nome == "":
+    if nome.strip() == "":
         raise ValueError("O nome do produto não pode ser vazio.")
 
     if preco <= 0:
