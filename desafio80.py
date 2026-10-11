@@ -12,7 +12,7 @@ class QuantidadeInvalidaError(Exception):
 
 def registrar_venda(produto, preco, quantidade):
 
-    if produto == "":
+    if produto.strip() == "":
         raise ProdutoInvalidoError("O nome do produto não pode ser vazio.")
 
     if preco <= 0:
@@ -42,15 +42,18 @@ def gerar_relatorio(vendas):
     quantidade_vendas = len(vendas)
 
     faturamento = 0
-    produto_mais_vendido = vendas[0]["produto"]
-    maior_quantidade = vendas[0]["quantidade"]
-
+    quantidade_vendida = {}
+    
     for venda in vendas:
         faturamento += venda["total"]
 
-        if venda["quantidade"] > maior_quantidade:
-            maior_quantidade = venda["quantidade"]
-            produto_mais_vendido = venda["produto"]
+        produto = venda["produto"]
+        quantidade_vendida[produto] = (
+            quantidade_vendida.get(produto, 0)
+            + venda["quantidade"]
+        )
+
+    produto_mais_vendido = max(quantidade_vendida, key=quantidade_vendida.get)
 
     ticket_medio = faturamento / quantidade_vendas
 
